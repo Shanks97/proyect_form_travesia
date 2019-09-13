@@ -12,12 +12,12 @@ import java.util.Date;
  * @author Juan
  */
 public class persona {
-    String ced, nombre, apellido, tipo_doc, genero, estado_civil, ocupacion;
-    Date fecha_nacimiento;
+    String ced, nombre, apellido, tipo_doc, genero, estado_civil, ocupacion,fecha_nacimiento;
+   
     
     public persona(){
         ced=nombre=apellido=tipo_doc=genero=estado_civil=ocupacion="";
-        fecha_nacimiento = null;
+        fecha_nacimiento = "";
     }
     public String getCed() {
         return ced;
@@ -75,11 +75,11 @@ public class persona {
         this.ocupacion = ocupacion;
     }
 
-    public Date getFecha_nacimiento() {
+    public String getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
     

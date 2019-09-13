@@ -4,11 +4,12 @@
     Author     : Juan
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.sun.webkit.WebPage"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="db." %>
+<%@page import="db.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +22,8 @@
 
             String nombre = request.getParameter("f_name").toString();
             String apellido = request.getParameter("s_name");
-            String id = request.getParameter("id");
+            String id = request.getParameter("id_docum");
+            String tipo_doc = request.getParameter("id");
             String genero = request.getParameter("genre");
             String categoria = request.getParameter("category");
             String bday_year = request.getParameter("year");
@@ -44,7 +46,34 @@
             String razon = request.getParameter("reason");
             database b = new database();
             b.conectar();
-            out.print(b);
+            
+            boolean existe = false;
+            for(persona aux : b.getPersonas()){
+                if(aux.getCed().equals(id)){
+                    out.print("Existe");
+                    existe = true;
+                }
+            }
+            if(!existe){
+                persona participante = new persona();
+                participante.setCed(id);
+                participante.setNombre(nombre);
+                participante.setApellido(apellido);
+                participante.setTipo_doc(tipo_doc);
+                participante.setGenero(genero);
+                participante.setFecha_nacimiento(bday_year+"/"+bday_month+"/"+bday_day);
+                participante.setEstado_civil(estado_civil);
+                participante.setOcupacion(ocupacion);
+                out.print(b.insertParticipante(participante));
+                
+                health_data salud = new health_data();
+                salud.setCedula(id);
+                salud.setEps(eps);
+                salud.setRh(rh);
+                out.println(b.insertSalud(salud));
+            }
+            
+            
 
         %>
         <br>Nombre: <%=nombre%>
