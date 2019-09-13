@@ -30,7 +30,7 @@ public class database {
     ArrayList<datos_contacto> contactos;
     ArrayList<antropometrico> antropometricos;
     ArrayList<sede> sedes;
-    
+
     public database() {
         personas = new ArrayList<persona>();
         sedes = new ArrayList<sede>();
@@ -39,64 +39,67 @@ public class database {
         seguimientos = new ArrayList<datos_segui>();
         contactos = new ArrayList<datos_contacto>();
         antropometricos = new ArrayList<antropometrico>();
-     
+
     }
 
     public boolean conectar() {
         try {
-           
+
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            con = DriverManager.getConnection(url,user,pass);
-            
+            con = DriverManager.getConnection(url, user, pass);
+
             return true;
         } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
+
     //SELECTS
-    public String setSedes(){
+    public String setSedes() {
         sedes = new ArrayList<sede>();
-        try{
+        try {
             String sql = "SELECT * FROM SEDE";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 sede aux = new sede();
                 aux.setId(resultSet.getInt("ID_SEDE"));
                 aux.setNombre(resultSet.getString("NAME"));
                 sedes.add(aux);
-               
-            }        
-        }catch(Exception e){
-            System.out.println("sedes"+e);
+
+            }
+        } catch (Exception e) {
+            System.out.println("sedes" + e);
             return e.getMessage();
         }
         return "nada";
     }
-    public void verificarParticipaciones(){
+
+    public void verificarParticipaciones() {
         participaciones = new ArrayList<part_event>();
-        try{
+        try {
             String sql = "SELECT * FROM PART_EVENT";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 part_event aux = new part_event();
                 aux.setId_Sede(resultSet.getInt("ID_SEDE"));
                 aux.setCedula(resultSet.getString("ID_PERSON"));
                 participaciones.add(aux);
             }
-        }catch(Exception e){
-        
+        } catch (Exception e) {
+
         }
     }
-    public String setParticipantes(){
+
+    public String setParticipantes() {
         personas = new ArrayList<persona>();
-        try{
+        try {
             String sql = "SELECT * FROM PERSONAL_DATA";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 persona aux = new persona();
                 aux.setCed(resultSet.getString("ID_PERSON"));
                 aux.setNombre(resultSet.getString("NOMBRE"));
@@ -107,19 +110,109 @@ public class database {
                 aux.setEstado_civil(resultSet.getString("CIVIL_STATUS"));
                 aux.setOcupacion(resultSet.getString("OCCUPATION"));
                 personas.add(aux);
-               
-            }        
-        }catch(Exception e){
-            System.out.println("personas"+e);
+
+            }
+        } catch (Exception e) {
+            System.out.println("personas" + e);
             return e.getMessage();
         }
         return "nada";
     }
-    
-    
-    public String insertParticipante(persona p){
-        try{
-            String sql  ="INSERT INTO PERSONAL_DATA VALUES(?,?,?,?,?,?,?,?)";
+
+    public String consultarSalud() {
+        datos_salud = new ArrayList<health_data>();
+        try {
+            String sql = "SELECT * FROM HEALTH_DATA";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                health_data aux = new health_data();
+                aux.setCedula(resultSet.getString("ID_PERSON"));
+                aux.setRh(resultSet.getString("RH"));
+                aux.setEps(resultSet.getString("EPS"));
+
+                datos_salud.add(aux);
+
+            }
+        } catch (Exception e) {
+            System.out.println("salud" + e);
+            return e.getMessage();
+        }
+        return "nada";
+    }
+
+    public String consultarAntropometricos() {
+        antropometricos = new ArrayList<antropometrico>();
+        try {
+            String sql = "SELECT * FROM ANTHROPOMETRIC";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                antropometrico aux = new antropometrico();
+                aux.setCedula(resultSet.getString("ID_PERSON"));
+                aux.setEstatura(resultSet.getInt("HEIGHT"));
+                aux.setPeso(resultSet.getInt("WEIGHT"));
+
+                antropometricos.add(aux);
+
+            }
+        } catch (Exception e) {
+            System.out.println("salud" + e);
+            return e.getMessage();
+        }
+        return "nada";
+    }
+
+    public String consultarContacto() {
+        contactos = new ArrayList<datos_contacto>();
+        try {
+            String sql = "SELECT * FROM CONTACT_DATA";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                datos_contacto aux = new datos_contacto();
+                aux.setCedula(resultSet.getString("ID_PERSON"));
+                aux.setTelefono(resultSet.getString("PHONE"));
+                aux.setEmai(resultSet.getString("EMAIL"));
+                aux.setCiudad(resultSet.getString("CITY"));
+                aux.setDireccion(resultSet.getString("ADDRESS"));
+                contactos.add(aux);
+
+            }
+        } catch (Exception e) {
+            System.out.println("salud" + e);
+            return e.getMessage();
+        }
+        return "nada";
+    }
+
+    public String consultarSeguimiento() {
+        seguimientos = new ArrayList<datos_segui>();
+        try {
+            String sql = "SELECT * FROM FOLLOW_UP_DATA";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                datos_segui aux = new datos_segui();
+                aux.setCedula(resultSet.getString("ID_PERSON"));
+                aux.setDeporte(resultSet.getString("SPORT"));
+                aux.setCategoria(resultSet.getString("CATEGORY"));
+                aux.setDias_pract(resultSet.getInt("PRAC_DAYS"));
+                aux.setRazon(resultSet.getString("REASON"));
+                ;
+                seguimientos.add(aux);
+
+            }
+        } catch (Exception e) {
+            System.out.println("personas" + e);
+            return e.getMessage();
+        }
+        return "nada";
+    }
+
+    public String insertParticipante(persona p) {
+        try {
+            String sql = "INSERT INTO PERSONAL_DATA VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setString(1, p.getCed());
             pr.setString(2, p.getNombre());
@@ -131,48 +224,103 @@ public class database {
             pr.setString(8, p.getOcupacion());
             pr.executeUpdate();
             return "Insertado el participante";
-        }catch(Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
     }
-    public String insertSalud(health_data p){
-        try{
-            String sql  ="INSERT INTO HEALTH_DATA VALUES(?,?,?)";
+
+    public String insertSalud(health_data p) {
+        try {
+            String sql = "INSERT INTO HEALTH_DATA VALUES(?,?,?)";
             PreparedStatement pr = con.prepareStatement(sql);
             pr.setString(1, p.getCedula());
             pr.setString(2, p.getRh());
             pr.setString(3, p.getEps());
-            
+
             pr.executeUpdate();
             return "Insertado salud";
-        }catch(Exception e){
+        } catch (Exception e) {
             return e.toString();
         }
     }
-     public String insertParticipacion(ArrayList<part_event> p){
-        try{
-            String sql  ="INSERT INTO PART_EVENT VALUES(?,?)";
+
+    public String insertDatos_segui(datos_segui p) {
+        try {
+            String sql = "INSERT INTO FOLLOW_UP_DATA VALUES(?,?,?,?,?)";
             PreparedStatement pr = con.prepareStatement(sql);
-            for(part_event x : p){
+            pr.setString(1, p.getCedula());
+            pr.setInt(2, p.getDias_pract());
+            pr.setString(3, p.getDeporte());
+            pr.setString(4, p.getCategoria());
+            pr.setString(5, p.getRazon());
+            pr.executeUpdate();
+            return "Insertado datos_Seguimiento";
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
+    public String insertDatos_contacto(datos_contacto p) {
+        try {
+            String sql = "INSERT INTO CONTACT_DATA VALUES(?,?,?,?,?)";
+            PreparedStatement pr = con.prepareStatement(sql);
+            pr.setString(1, p.getCedula());
+            pr.setString(2, p.getTelefono());
+            pr.setString(3, p.getEmai());
+            pr.setString(4, p.getCiudad());
+            pr.setString(5, p.getDireccion());
+            pr.executeUpdate();
+            return "Insertado datos_contacto";
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
+    public String insertParticipacion(ArrayList<part_event> p) {
+        try {
+            String sql = "INSERT INTO PART_EVENT VALUES(?,?)";
+            PreparedStatement pr = con.prepareStatement(sql);
+            for (part_event x : p) {
                 pr.setString(1, x.getCedula());
                 pr.setInt(2, x.getId_Sede());
                 pr.executeUpdate();
             }
             return "Insertado participacion";
+        } catch (Exception e) {
+            return e.toString();
+        }
+    }
+
+    public String insertDatos_antropometricos(antropometrico p){
+        try{
+            String sql  ="INSERT INTO ANTHROPOMETRIC_DATA VALUES(?,?,?)";
+            PreparedStatement pr = con.prepareStatement(sql);
+            pr.setString(1, p.getCedula());
+            pr.setInt(2, p.getPeso());
+            pr.setInt(3, p.getEstatura());
+            
+            pr.executeUpdate();
+            return "Insertado datos_Seguimiento";
         }catch(Exception e){
             return e.toString();
         }
     }
-    
-    public ArrayList<sede> getSedes(){
+    public ArrayList<sede> getSedes() {
         setSedes();
         return sedes;
     }
-    public void desconectar(){
+
+    public void desconectar() {
         con = null;
     }
-    public void getDatos(persona participante, part_event participacion, health_data salud,
-            datos_segui seguimiento, datos_contacto contacto, antropometrico antropo) {
+
+    public void updateDatos() {
+        setParticipantes();
+        verificarParticipaciones();
+        consultarSalud();
+        consultarSeguimiento();
+        consultarAntropometricos();
+        consultarContacto();
 
     }
 
@@ -231,7 +379,5 @@ public class database {
     public void setAntropometricos(ArrayList<antropometrico> antropometricos) {
         this.antropometricos = antropometricos;
     }
-    
-    
 
 }

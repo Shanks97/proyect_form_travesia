@@ -87,7 +87,12 @@
                             salud.setEps(eps);
                             salud.setRh(rh);
                             out.println(b.insertSalud(salud));
-
+                            
+                            antropometrico ant = new antropometrico();
+                            ant.setCedula(id);
+                            ant.setEstatura(Integer.parseInt(estatura));
+                            ant.setPeso(Integer.parseInt(peso));
+                            
                         }
                         for (String x : sedes) {
                             if (x != null) {
@@ -100,7 +105,7 @@
                         out.println(b.insertParticipacion(partici));
                     }
                 }
-
+                b.updateDatos();
             } else {
                 persona participante = new persona();
                 participante.setCed(id);
@@ -128,6 +133,7 @@
                     }
                 }
                 out.println(b.insertParticipacion(partici));
+                b.updateDatos();
             }
 
 

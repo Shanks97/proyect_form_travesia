@@ -21,6 +21,11 @@ public class sede {
         id = 0;
         
     }
+    public sede(int i, String n)
+    {
+        id = i; 
+        nombre = n;        
+    }
 
     public String getNombre() {
         return nombre;

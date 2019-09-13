@@ -41,12 +41,17 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
-  var x, y, z, i, valid = true, valid2 = true;
+  var x, y, z, sedes, i, valid = true, valid2 = true, valid3 = false;
   x = document.getElementsByClassName("tab");
   y = x[currentTab].getElementsByTagName("input");
   z = x[currentTab].getElementsByTagName("select");
-  pol_data = document.getElementsByName("pol_data"); 
+  sedes = document.getElementsByClassName("sede");
   // A loop that checks every input field in the current tab:
+  for(i = 0; i < sedes.length; i++){
+          if(sedes[i].checked === true)          
+              valid3 = true;          
+  }
+  
   for (i = 0; i < y.length; i++) {
     // If a field is empty...
     if (y[i].value === "") {
@@ -56,6 +61,7 @@ function validateForm() {
       valid = false;
     }
   }
+  
   for (i = 0; i < z.length; i++) {
     // If a field is empty...
     var t = z[i];
@@ -69,10 +75,10 @@ function validateForm() {
     }
   }
   // If the valid status is true, mark the step as finished and valid:
-  if (valid && valid2 && pol_data.checked) {
+  if (valid && valid2 && valid3) {
     document.getElementsByClassName("step")[currentTab].className += " finish";
   }
-  return valid; // return the valid status
+  return valid && valid2 && valid3; // return the valid status
 }
 
 function fixStepIndicator(n) {

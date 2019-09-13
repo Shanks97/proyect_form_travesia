@@ -2,14 +2,16 @@
 * {
   box-sizing: border-box;
 }
-
+p{
+    margin-left: 5%;
+}
 body {
   background-color: white;
   margin: 0px;
 }
 #logo{
-    width: 10%;
-    height: 10%;
+    width: 100px;
+    height: 150px;
     background-color: #4CAF50;
     background-size: cover;
 }
@@ -20,21 +22,26 @@ body {
     height:  24%; 
     position: absolute;
     font-size: 140%;
+    font-family: "Century Gothic";
+    font-style: italic;
+    font-weight: bold;
 }
 #logo_travesia{
-    padding-left: 60%;    
-    width: 90%; 
-    height: 32%;
+    margin-left: 50%;    
+    width: 300px; 
+    height: 150px;
     position: absolute;    
     
     background-size: cover;
     
 }
 #regForm {
-  background-color: #ffffff;
-  margin: 100px auto;
+  background-color: white;
+  margin: 45px auto;
   font-family: Raleway;
-  
+  border-radius: 5px;
+  border-color: #79c000;
+  border-style: groove;
   padding-top: 0px;
   width: 70%;
   min-width: 300px;
@@ -44,12 +51,21 @@ h1 {
   text-align: center;  
 }
 
+.sede{
+    
+    
+}
+.forms{
+    
+}
 input {
   padding: 10px;
-  width: 100%;
+  width: 95%;
+  
   font-size: 17px;
   font-family: Raleway;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #fbe122;
+  border-radius: 10px;
 }
 
 /* Mark input boxes that gets an error on validation: */
@@ -103,9 +119,13 @@ button:hover {
 
 select{
     padding: 10px;
-  width: 100%;
+  width: 95%;
+  
   font-size: 17px;
+  border: 1px solid #fbe122;
+  border-radius: 10px;
+  align-content: center;
   font-family: Raleway;
-  border: 1px solid #aaaaaa;
+  
   
 }

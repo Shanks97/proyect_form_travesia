@@ -5,6 +5,7 @@
 <!--<jsp:include page="formulario.html"></jsp:include>-->
 --%>
 
+<%@page import="db.sede"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.text.DateFormatSymbols"%>
 <%@page import="java.text.DateFormat"%>
@@ -16,7 +17,7 @@
     <head>
 
         <meta content="width=device-width, initial-scale=1.0" http-equiv="Content-Type" name="viewport">
-        <link href="images/styles.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
         <script type="text/javascript">
             window.addEventListener("load", function () {
                 const loader = document.querySelector(".loader");
@@ -170,28 +171,38 @@
             <div class="loader1"></div>
         </div>
         <div>
-            <div style="background-color: #aaaaaa; width: 100%;">
+            <div style="background-color: white; width: 200px; height:150px;">
                 <img id="logo" style="" src="images/3Recurso 2-50.jpg">
                 <label id="title_t">TRAVESIA POR CUNDINAMARCA</label> 
 
                 <img id="logo_travesia" style="" src="images/logo_travesia.png">
             </div>
+           
             <form action="registrar.jsp" id="regForm" name="regForm">
+                Seleccione la(s) sede(s) en la(s) que desea participar!
 
-                    <br>
-                <div class="tab">
+                    
+                <div class="tab" >
                     <%
-                        String sedes[] ={"Fusagasugá","Girardot","Ubaté","Chía","Chocontá","Facatativá","Soacha","Zipaquirá"};
+                        
+                        
+                        sede sedes[] ={
+                            new sede(5, "Chocontá 29 de Septiembre"),
+                            new sede(3, "Ubaté 4 de Octubre"),
+                            new sede(8, "Zipaquirá 25 de Octubre"),
+                            new sede(4, "Chía 26 de Octubre"),
+                            new sede(6, "Facatativá 1 de Noviembre"),
+                            new sede(7, "Soacha 8 de Noviembre"),
+                            new sede(1, "Fusagasugá 16 de Noviembre"),
+                            new sede(2, "Girardot 24 de Noviembre")
+                        };
+                        
                         for(int i=0;i<sedes.length;i++){
                             %>
-                            <input type="checkbox" name ="<%=i+1%>" value="<%=i+1%>"> <%=sedes[i]%>
+                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=i+1%>" value="<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
                         <%}
                     %>
-                    <br>
-                    Datos Personales:
-                    <p><input name="f_name" oninput="this.className = ''" placeholder="Nombres..."></p>
-                    <p><input name="s_name" oninput="this.className = ''" placeholder="Apellidos..."></p>
-                    <select name="id" required="">
+                    <p><select name="id" required="">
                         <option disabled selected value="">
                             Tipo de documento
                         </option>
@@ -205,14 +216,25 @@
                             Cédula de extranjería
                         </option>
                     </select>
-                    <p><input name="id_docum" oninput="this.className = ''" placeholder="Numero de identidad..."></p><label>Fecha de nacimiento:</label>
-                    <p><select class="sel_bday" name="year" onchange="limpiar();" required="">
+                    </p>
+                    <p><input name="id_docum" oninput="this.className = ''" placeholder="Numero de identidad..."></p>
+                     <label><input style="width: 5% " type="checkbox" name="pol_data" value="true"> He leido y acepto la <a target ="_blank"href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales">política de tratamiento de datos personales.</a></label>
+
+                    </div>
+                <div class="tab">
+                    
+                    
+                    
+                    <p>Datos Personales: <input class="f" name="f_name" oninput="this.className = ''" placeholder="Nombres..."></p>
+                    <p><input name="s_name" oninput="this.className = ''" placeholder="Apellidos..."></p>
+                    
+                    <p><label>Fecha de nacimiento:</label><select class="sel_bday" name="year" onchange="limpiar();" required="">
                             <option disabled hidden="" selected value="">
                                 Año
                             </option><%
                                 int min_year = 1939;
                                 int current_year = Calendar.getInstance().get(Calendar.YEAR);
-                                for (int i = current_year; i >= min_year; i--) {%>
+                                for (int i = current_year-12; i >= min_year; i--) {%>
                             <option value="<%=i%>">
                                 <%=i%>
                             </option><%}
@@ -273,11 +295,12 @@
                         </select></p>
                     <p><label>Ciudad:</label> <input name="city" placeholder="Ciudad" required="" type="text"></p>
                     <p><label>Dirección:</label> <input name="address" placeholder="Direccion" required="" type="text"></p>
-                    <p><label>Correo electrónico:</label> <input name="email" placeholder="email@email.com" required="" type="email"><br></p>
-                    <br>
-                    <label>Eps:</label> <input name="eps" placeholder="EPS" required="" type="text"><br>
-                    <br>
-                    <label>RH:</label> <select name="rh" required="">
+                    <p><label>Teléfono:</label> <input name="phone" placeholder="1234567890" required="" type="number"></p>
+                    <p><label>Correo electrónico:</label> <input name="email" placeholder="email@email.com" required="" type="email"></p>
+                    
+                    <p><label>Eps:          </label></p><p> <input name="eps" placeholder="EPS" required="" type="text"></p>
+                    
+                    <p><label>RH:</label></p><p> <select name="rh" required="">
                         <option disabled hidden="" selected value="">
                             Seleccionar
                         </option><%
@@ -287,17 +310,12 @@
                             <%=x%>
                         </option><%}
                         %>
-                    </select><br>
-                    <br>
-
-                    <label>Teléfono:</label> <input name="phone" placeholder="1234567890" required="" type="number">
-                    <br>
-                    <br>
-                    <label><input type="checkbox" name="pol_data" value="true"> He leido y acepto la <a target ="_blank"href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales">política de tratamiento de datos personales.</a></label>
-
+                        </select></p>   
+                        
+                  
                 </div>
                 <div class="tab">
-                    <h3>Datos de Seguimiento</h3><br>
+                    <h3>Datos de Seguimiento</h3>
                     <p>
                         ¿En que categoría participará? <select name="category" required="">
                             <option disabled hidden="" selected value="">
@@ -360,16 +378,15 @@
                 </div>
                 <div class="tab">
                     Datos Antropometricos
-                    <p> <label>Peso:</label>
-                        <input type="number" name="weight" required></p>
+                    <p> <label>Peso:</label></p>
+                    <p><input type="number" name="weight" required></p>
                     <p> <label>Estatura:</label>
                         <input type="number" name="height" placeholder="Ingrese la estatura en centímetros" required>
                     </p>
                     <p>
-                        <label>¿Por qué quiere participar en la Travesía por Cundinamarca?</label>
-                        <br>
-                        <textarea name="reason" rows="10" cols="30" placeholder="Cuentanos tu interés"></textarea>
-
+                        <label>¿Por qué quiere participar en la Travesía por Cundinamarca?</label></p>
+                    <p>                       
+                        <textarea style="width: 95%; border: 1px solid #fbe122;" name="reason" rows="10" cols="30" placeholder="Cuentanos tu interés"></textarea>
                     </p>
                 </div>
                 <div style="overflow:auto;">
@@ -383,7 +400,7 @@
                     </div>
                 </div><!-- Circles which indicates the steps of the form: -->
                 <div style="text-align:center;margin-top:40px;">
-                    <span class="step"></span> <span class="step"></span> <span class="step"></span>
+                    <span class="step"></span> <span class="step"></span> <span class="step"></span><span class="step"></span>
                 </div>
             </form>
         </div>
