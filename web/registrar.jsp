@@ -8,7 +8,7 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.xyz.database" %>
+<%@page import="db." %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,20 +42,9 @@
             String tipo_actividad = request.getParameter("sport_act");
             String nivel_dep = request.getParameter("sport_level");
             String razon = request.getParameter("reason");
-            try {
-                final String url = "jdbc:oracle:thin:@localhost:1521:XE";
-                final String user = "system";
-                final String pass = "admin";
-                Connection con;
-                Class.forName("oracle.jdbc.driver.OracleDriver");
-                con = DriverManager.getConnection(url, user, pass);
-                if (con != null) {
-                    out.print(con);
-                }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
+            database b = new database();
+            b.conectar();
+            out.print(b);
 
         %>
         <br>Nombre: <%=nombre%>

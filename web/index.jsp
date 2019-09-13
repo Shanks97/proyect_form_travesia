@@ -22,7 +22,7 @@
                 const loader = document.querySelector(".loader");
                 loader.className += " hidden";
                 console.log("cargando");
-                      
+                        
             });
 
             function enable_disable(elemento) {
