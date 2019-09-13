@@ -34,6 +34,11 @@ public class database {
     public database() {
         personas = new ArrayList<persona>();
         sedes = new ArrayList<sede>();
+        participaciones = new ArrayList<part_event>();
+        datos_salud = new ArrayList<health_data>();
+        seguimientos = new ArrayList<datos_segui>();
+        contactos = new ArrayList<datos_contacto>();
+        antropometricos = new ArrayList<antropometrico>();
      
     }
 
@@ -68,6 +73,22 @@ public class database {
             return e.getMessage();
         }
         return "nada";
+    }
+    public void verificarParticipaciones(){
+        participaciones = new ArrayList<part_event>();
+        try{
+            String sql = "SELECT * FROM PART_EVENT";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                part_event aux = new part_event();
+                aux.setId_Sede(resultSet.getInt("ID_SEDE"));
+                aux.setCedula(resultSet.getString("ID_PERSON"));
+                participaciones.add(aux);
+            }
+        }catch(Exception e){
+        
+        }
     }
     public String setParticipantes(){
         personas = new ArrayList<persona>();
@@ -124,6 +145,20 @@ public class database {
             
             pr.executeUpdate();
             return "Insertado salud";
+        }catch(Exception e){
+            return e.toString();
+        }
+    }
+     public String insertParticipacion(ArrayList<part_event> p){
+        try{
+            String sql  ="INSERT INTO PART_EVENT VALUES(?,?)";
+            PreparedStatement pr = con.prepareStatement(sql);
+            for(part_event x : p){
+                pr.setString(1, x.getCedula());
+                pr.setInt(2, x.getId_Sede());
+                pr.executeUpdate();
+            }
+            return "Insertado participacion";
         }catch(Exception e){
             return e.toString();
         }

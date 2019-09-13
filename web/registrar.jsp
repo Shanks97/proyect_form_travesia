@@ -19,7 +19,7 @@
     <body>
         <h1 >Hello World!</h1>
         <%
-
+            ArrayList<part_event> partici = new ArrayList<part_event>();
             String nombre = request.getParameter("f_name").toString();
             String apellido = request.getParameter("s_name");
             String id = request.getParameter("id_docum");
@@ -39,64 +39,100 @@
             String tel = request.getParameter("phone");
             String peso = request.getParameter("weight");
             String estatura = request.getParameter("height");
-            String act_fis = request.getParameter("phy_activity");
+
             String dias_act = request.getParameter("day_phy_act");
             String tipo_actividad = request.getParameter("sport_act");
             String nivel_dep = request.getParameter("sport_level");
             String razon = request.getParameter("reason");
+            String sedes[] = new String[8];
+            for (int i = 0; i < sedes.length; i++) {
+                sedes[i] = request.getParameter("" + (i + 1));
+            }
+
             database b = new database();
             b.conectar();
-            
+
             boolean existe = false;
-            for(persona aux : b.getPersonas()){
-                if(aux.getCed().equals(id)){
-                    out.print("Existe");
-                    existe = true;
+            if (b.getParticipaciones().size() > 0) {
+                for (part_event aux : b.getParticipaciones()) {
+                    for (int i = 0; i < sedes.length; i++) {
+                        if (aux.getCedula().equals(id) && aux.getId_Sede() == Integer.parseInt(sedes[i])) {
+                            out.print("Existe");
+                            existe = true;
+                        }
+                    }
                 }
-            }
-            if(!existe){
+                if (!existe) {
+                    if (b.getPersonas().size() > 0) {
+                        boolean existe2 = false;
+                        for (persona t : b.getPersonas()) {
+                            if (t.getCed().equals(id)) {
+                                existe2 = true;
+                            }
+                        }
+                        if (!existe2) {
+                            persona participante = new persona();
+                            participante.setCed(id);
+                            participante.setNombre(nombre);
+                            participante.setApellido(apellido);
+                            participante.setTipo_doc(tipo_doc);
+                            participante.setGenero(genero);
+                            participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
+                            participante.setEstado_civil(estado_civil);
+                            participante.setOcupacion(ocupacion);
+                            out.print(b.insertParticipante(participante));
+
+                            health_data salud = new health_data();
+                            salud.setCedula(id);
+                            salud.setEps(eps);
+                            salud.setRh(rh);
+                            out.println(b.insertSalud(salud));
+
+                        }
+                        for (String x : sedes) {
+                            if (x != null) {
+                                part_event partic = new part_event();
+                                partic.setCedula(id);
+                                partic.setId_Sede(Integer.parseInt(x));
+                                partici.add(partic);
+                            }
+                        }
+                        out.println(b.insertParticipacion(partici));
+                    }
+                }
+
+            } else {
                 persona participante = new persona();
                 participante.setCed(id);
                 participante.setNombre(nombre);
                 participante.setApellido(apellido);
                 participante.setTipo_doc(tipo_doc);
                 participante.setGenero(genero);
-                participante.setFecha_nacimiento(bday_year+"/"+bday_month+"/"+bday_day);
+                participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
                 participante.setEstado_civil(estado_civil);
                 participante.setOcupacion(ocupacion);
                 out.print(b.insertParticipante(participante));
-                
+
                 health_data salud = new health_data();
                 salud.setCedula(id);
                 salud.setEps(eps);
                 salud.setRh(rh);
                 out.println(b.insertSalud(salud));
+
+                for (String x : sedes) {
+                    if (x != null) {
+                        part_event partic = new part_event();
+                        partic.setCedula(id);
+                        partic.setId_Sede(Integer.parseInt(x));
+                        partici.add(partic);
+                    }
+                }
+                out.println(b.insertParticipacion(partici));
             }
-            
-            
+
 
         %>
-        <br>Nombre: <%=nombre%>
-        <br>Apellido: <%=apellido%>
-        <br>Edad: 
-        <br>Cedula: <%=id%>
-        <br>Genero: <%=genero%>
-        <br>Categoria: <%=categoria%>
-        <br>Fecha de nacimiendo: <%=bday_year%>/<%=bday_month%>/<%=bday_day%>
-        <br>Estado civil: <%=estado_civil%>
-        <br>Ocupacion: <%=ocupacion%>
-        <br>Ciudad: <%=ciudad%>
-        <br>Direccion <%=direccion%>
-        <br>Email: <%=email%>
-        <br>Eps: <%=eps%>
-        <br>RH: <%=rh%>
-        <br>Teléfono: <%=tel%>
-        <br>Peso: <%=peso%>
-        <br>Estatura: <%=estatura%>
-        <br>Actividad física: <%=act_fis%>
-        <br>Dias de actividad: <%=dias_act%>
-        <br>Tipo de actividad: <%=tipo_actividad%>
-        <br>Nivel deportivo: <%=nivel_dep%>
-        <br>Razones para participar: <%=razon%>        
+        <br>
+
     </body>
 </html>

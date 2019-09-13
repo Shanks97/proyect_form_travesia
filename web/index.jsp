@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
         <meta content="width=device-width, initial-scale=1.0" http-equiv="Content-Type" name="viewport">
         <link href="images/styles.css" rel="stylesheet">
         <script type="text/javascript">
@@ -22,7 +22,7 @@
                 const loader = document.querySelector(".loader");
                 loader.className += " hidden";
                 console.log("cargando");
-                        
+
             });
 
             function enable_disable(elemento) {
@@ -173,14 +173,21 @@
             <div style="background-color: #aaaaaa; width: 100%;">
                 <img id="logo" style="" src="images/3Recurso 2-50.jpg">
                 <label id="title_t">TRAVESIA POR CUNDINAMARCA</label> 
-                  
+
                 <img id="logo_travesia" style="" src="images/logo_travesia.png">
             </div>
             <form action="registrar.jsp" id="regForm" name="regForm">
 
-                
-
+                    <br>
                 <div class="tab">
+                    <%
+                        String sedes[] ={"Fusagasugá","Girardot","Ubaté","Chía","Chocontá","Facatativá","Soacha","Zipaquirá"};
+                        for(int i=0;i<sedes.length;i++){
+                            %>
+                            <input type="checkbox" name ="<%=i+1%>" value="<%=i+1%>"> <%=sedes[i]%>
+                        <%}
+                    %>
+                    <br>
                     Datos Personales:
                     <p><input name="f_name" oninput="this.className = ''" placeholder="Nombres..."></p>
                     <p><input name="s_name" oninput="this.className = ''" placeholder="Apellidos..."></p>
