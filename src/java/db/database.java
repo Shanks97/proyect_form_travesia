@@ -47,7 +47,7 @@ public class database {
 
             Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection(url, user, pass);
-
+            
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -76,21 +76,26 @@ public class database {
         return "nada";
     }
 
-    public void verificarParticipaciones() {
+    public String verificarParticipaciones() {
         participaciones = new ArrayList<part_event>();
         try {
             String sql = "SELECT * FROM PART_EVENT";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                part_event aux = new part_event();
-                aux.setId_Sede(resultSet.getInt("ID_SEDE"));
-                aux.setCedula(resultSet.getString("ID_PERSON"));
-                participaciones.add(aux);
+                part_event aux1 = new part_event();
+                
+                aux1.setCedula(""+resultSet.getString("ID_PERSON"));
+                aux1.setId_Sede(resultSet.getInt("ID_SEDE"));
+                
+                participaciones.add(aux1);
+                return (resultSet.getString("ID_PERSON"));
+                
             }
         } catch (Exception e) {
-
+            return "participaciones " + e;
         }
+        return "nada";
     }
 
     public String setParticipantes() {
@@ -157,7 +162,7 @@ public class database {
 
             }
         } catch (Exception e) {
-            System.out.println("salud" + e);
+            System.out.println("antropro " + e);
             return e.getMessage();
         }
         return "nada";
@@ -180,7 +185,7 @@ public class database {
 
             }
         } catch (Exception e) {
-            System.out.println("salud" + e);
+            System.out.println("contacto " + e);
             return e.getMessage();
         }
         return "nada";
@@ -199,12 +204,12 @@ public class database {
                 aux.setCategoria(resultSet.getString("CATEGORY"));
                 aux.setDias_pract(resultSet.getInt("PRAC_DAYS"));
                 aux.setRazon(resultSet.getString("REASON"));
-                ;
+                
                 seguimientos.add(aux);
 
             }
         } catch (Exception e) {
-            System.out.println("personas" + e);
+            System.out.println("seguimiento " + e);
             return e.getMessage();
         }
         return "nada";
@@ -314,14 +319,14 @@ public class database {
         con = null;
     }
 
-    public void updateDatos() {
+    public String updateDatos() {
         setParticipantes();
-        verificarParticipaciones();
+        
         consultarSalud();
         consultarSeguimiento();
         consultarAntropometricos();
         consultarContacto();
-
+        return verificarParticipaciones();
     }
 
     public Connection getCon() {

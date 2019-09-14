@@ -48,14 +48,25 @@
             for (int i = 0; i < sedes.length; i++) {
                 sedes[i] = request.getParameter("" + (i + 1));
             }
-
+         
             database b = new database();
             b.conectar();
+            out.print(b.updateDatos());
 
-            boolean existe = false;
+            
             if (b.getParticipaciones().size() > 0) {
+                b.verificarParticipaciones();
+                boolean existe = false;
+                for(int i=0;i<b.getParticipaciones().size();i++){
+                    out.print("Test: " +b.getParticipaciones().get(i).getCedula());
+                }
                 for (part_event aux : b.getParticipaciones()) {
+                    out.print(aux.getCedula());
                     for (int i = 0; i < sedes.length; i++) {
+                        if(sedes[i]!=null){
+                            out.println(sedes[i]);
+                        }
+                        out.print("Cedula " + aux.getCedula());
                         if (aux.getCedula().equals(id) && aux.getId_Sede() == Integer.parseInt(sedes[i])) {
                             out.print("Existe");
                             existe = true;
@@ -87,12 +98,29 @@
                             salud.setEps(eps);
                             salud.setRh(rh);
                             out.println(b.insertSalud(salud));
-                            
+
                             antropometrico ant = new antropometrico();
                             ant.setCedula(id);
                             ant.setEstatura(Integer.parseInt(estatura));
                             ant.setPeso(Integer.parseInt(peso));
-                            
+                            out.println(b.insertDatos_antropometricos(ant));
+
+                            datos_segui d_s = new datos_segui();
+                            d_s.setCedula(id);
+                            d_s.setCategoria(categoria);
+                            d_s.setDeporte(tipo_actividad);
+                            d_s.setDias_pract(Integer.parseInt(dias_act));
+                            d_s.setRazon(razon);
+                            out.println(b.insertDatos_segui(d_s));
+
+                            datos_contacto d_c = new datos_contacto();
+                            d_c.setCedula(id);
+                            d_c.setCiudad(ciudad);
+                            d_c.setDireccion(direccion);
+                            d_c.setEmai(email);
+                            d_c.setTelefono(tel);
+                            out.println(b.insertDatos_contacto(d_c));
+
                         }
                         for (String x : sedes) {
                             if (x != null) {
@@ -102,7 +130,47 @@
                                 partici.add(partic);
                             }
                         }
-                        out.println(b.insertParticipacion(partici));
+                        out.println(b.insertParticipacion(partici) + " asdasd");
+                    }
+                    else{
+                        persona participante = new persona();
+                            participante.setCed(id);
+                            participante.setNombre(nombre);
+                            participante.setApellido(apellido);
+                            participante.setTipo_doc(tipo_doc);
+                            participante.setGenero(genero);
+                            participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
+                            participante.setEstado_civil(estado_civil);
+                            participante.setOcupacion(ocupacion);
+                            out.print(b.insertParticipante(participante));
+
+                            health_data salud = new health_data();
+                            salud.setCedula(id);
+                            salud.setEps(eps);
+                            salud.setRh(rh);
+                            out.println(b.insertSalud(salud));
+
+                            antropometrico ant = new antropometrico();
+                            ant.setCedula(id);
+                            ant.setEstatura(Integer.parseInt(estatura));
+                            ant.setPeso(Integer.parseInt(peso));
+                            out.println(b.insertDatos_antropometricos(ant));
+
+                            datos_segui d_s = new datos_segui();
+                            d_s.setCedula(id);
+                            d_s.setCategoria(categoria);
+                            d_s.setDeporte(tipo_actividad);
+                            d_s.setDias_pract(Integer.parseInt(dias_act));
+                            d_s.setRazon(razon);
+                            out.println(b.insertDatos_segui(d_s));
+
+                            datos_contacto d_c = new datos_contacto();
+                            d_c.setCedula(id);
+                            d_c.setCiudad(ciudad);
+                            d_c.setDireccion(direccion);
+                            d_c.setEmai(email);
+                            d_c.setTelefono(tel);
+                            out.println(b.insertDatos_contacto(d_c));
                     }
                 }
                 b.updateDatos();
@@ -123,6 +191,28 @@
                 salud.setEps(eps);
                 salud.setRh(rh);
                 out.println(b.insertSalud(salud));
+
+                antropometrico ant = new antropometrico();
+                ant.setCedula(id);
+                ant.setEstatura(Integer.parseInt(estatura));
+                ant.setPeso(Integer.parseInt(peso));
+                out.println(b.insertDatos_antropometricos(ant));
+
+                datos_segui d_s = new datos_segui();
+                d_s.setCedula(id);
+                d_s.setCategoria(categoria);
+                d_s.setDeporte(tipo_actividad);
+                d_s.setDias_pract(Integer.parseInt(dias_act));
+                d_s.setRazon(razon);
+                out.println(b.insertDatos_segui(d_s));
+
+                datos_contacto d_c = new datos_contacto();
+                d_c.setCedula(id);
+                d_c.setCiudad(ciudad);
+                d_c.setDireccion(direccion);
+                d_c.setEmai(email);
+                d_c.setTelefono(tel);
+                out.println(b.insertDatos_contacto(d_c));
 
                 for (String x : sedes) {
                     if (x != null) {

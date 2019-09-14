@@ -63,6 +63,7 @@
                 opcionDef = document.createElement("option");
                 opcionDef.setAttribute("label", "Mes");
                 opcionDef.setAttribute("disabled", "true");
+                opcionDef.setAttribute("selected","true");
                 elemento1.appendChild(opcionDef);
                 opcionDef2 = document.createElement("option");
                 opcionDef2.setAttribute("label", "Día");
@@ -217,7 +218,7 @@
                         </option>
                     </select>
                     </p>
-                    <p><input name="id_docum" oninput="this.className = ''" placeholder="Numero de identidad..."></p>
+                    <p><input type = "number"name="id_docum" oninput="this.className = ''" placeholder="Numero de identidad..."></p>
                      <label><input style="width: 5% " type="checkbox" name="pol_data" value="true"> He leido y acepto la <a target ="_blank"href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales">política de tratamiento de datos personales.</a></label>
 
                     </div>
