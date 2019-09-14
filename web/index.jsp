@@ -200,7 +200,7 @@
                         
                         for(int i=0;i<sedes.length;i++){
                             %>
-                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=i+1%>" value="<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
+                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=sedes[i].getId()%>" value="sede<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
                         <%}
                     %>
                     <p><select name="id" required="">

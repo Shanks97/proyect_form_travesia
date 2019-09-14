@@ -46,134 +46,104 @@
             String razon = request.getParameter("reason");
             String sedes[] = new String[8];
             for (int i = 0; i < sedes.length; i++) {
-                sedes[i] = request.getParameter("" + (i + 1));
+                sedes[i] = request.getParameter(Integer.toString(i + 1));
+                out.println(sedes[i]);
             }
-         
-            database b = new database();
-            b.conectar();
-            out.print(b.updateDatos());
 
-            
+            database b = new database();
+            if (b.conectar()) {
+                out.print("Working  ");
+                out.print(b.updateDatos());
+            }
             if (b.getParticipaciones().size() > 0) {
-                b.verificarParticipaciones();
                 boolean existe = false;
-                for(int i=0;i<b.getParticipaciones().size();i++){
-                    out.print("Test: " +b.getParticipaciones().get(i).getCedula());
-                }
-                for (part_event aux : b.getParticipaciones()) {
-                    out.print(aux.getCedula());
-                    for (int i = 0; i < sedes.length; i++) {
-                        if(sedes[i]!=null){
-                            out.println(sedes[i]);
-                        }
-                        out.print("Cedula " + aux.getCedula());
-                        if (aux.getCedula().equals(id) && aux.getId_Sede() == Integer.parseInt(sedes[i])) {
-                            out.print("Existe");
+                for (part_event x : b.getParticipaciones()) {
+                    for (String s : sedes) {
+                        String h = "sede" + x.getId_Sede();
+                        if (x.getCedula().equals(id) && h.equals(s)) {
+                            out.print("Ya esta en esas sedes " + x.getId_Sede());
                             existe = true;
                         }
                     }
                 }
                 if (!existe) {
-                    if (b.getPersonas().size() > 0) {
-                        boolean existe2 = false;
-                        for (persona t : b.getPersonas()) {
-                            if (t.getCed().equals(id)) {
-                                existe2 = true;
-                            }
+
+                    boolean verify = false;
+                    int verify2 = 0;
+                    for (part_event x : b.getParticipaciones()) {
+                        if (x.getCedula().equals(id)) {
+                            out.print("Ya esta la cedula");
+                            verify = true;
+                        } else {
+                            verify2++;
                         }
-                        if (!existe2) {
-                            persona participante = new persona();
-                            participante.setCed(id);
-                            participante.setNombre(nombre);
-                            participante.setApellido(apellido);
-                            participante.setTipo_doc(tipo_doc);
-                            participante.setGenero(genero);
-                            participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
-                            participante.setEstado_civil(estado_civil);
-                            participante.setOcupacion(ocupacion);
-                            out.print(b.insertParticipante(participante));
-
-                            health_data salud = new health_data();
-                            salud.setCedula(id);
-                            salud.setEps(eps);
-                            salud.setRh(rh);
-                            out.println(b.insertSalud(salud));
-
-                            antropometrico ant = new antropometrico();
-                            ant.setCedula(id);
-                            ant.setEstatura(Integer.parseInt(estatura));
-                            ant.setPeso(Integer.parseInt(peso));
-                            out.println(b.insertDatos_antropometricos(ant));
-
-                            datos_segui d_s = new datos_segui();
-                            d_s.setCedula(id);
-                            d_s.setCategoria(categoria);
-                            d_s.setDeporte(tipo_actividad);
-                            d_s.setDias_pract(Integer.parseInt(dias_act));
-                            d_s.setRazon(razon);
-                            out.println(b.insertDatos_segui(d_s));
-
-                            datos_contacto d_c = new datos_contacto();
-                            d_c.setCedula(id);
-                            d_c.setCiudad(ciudad);
-                            d_c.setDireccion(direccion);
-                            d_c.setEmai(email);
-                            d_c.setTelefono(tel);
-                            out.println(b.insertDatos_contacto(d_c));
-
-                        }
+                    }
+                    if (verify) {
                         for (String x : sedes) {
                             if (x != null) {
                                 part_event partic = new part_event();
                                 partic.setCedula(id);
-                                partic.setId_Sede(Integer.parseInt(x));
+                                String num = String.valueOf(x.charAt(4));
+                                partic.setId_Sede(Integer.parseInt(num));
                                 partici.add(partic);
                             }
                         }
-                        out.println(b.insertParticipacion(partici) + " asdasd");
+                        out.println(b.insertParticipacion(partici));
                     }
-                    else{
+                    if (verify2 == b.getParticipaciones().size()) {
                         persona participante = new persona();
-                            participante.setCed(id);
-                            participante.setNombre(nombre);
-                            participante.setApellido(apellido);
-                            participante.setTipo_doc(tipo_doc);
-                            participante.setGenero(genero);
-                            participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
-                            participante.setEstado_civil(estado_civil);
-                            participante.setOcupacion(ocupacion);
-                            out.print(b.insertParticipante(participante));
+                        participante.setCed(id);
+                        participante.setNombre(nombre);
+                        participante.setApellido(apellido);
+                        participante.setTipo_doc(tipo_doc);
+                        participante.setGenero(genero);
+                        participante.setFecha_nacimiento(bday_year + "/" + bday_month + "/" + bday_day);
+                        participante.setEstado_civil(estado_civil);
+                        participante.setOcupacion(ocupacion);
+                        out.print(b.insertParticipante(participante));
 
-                            health_data salud = new health_data();
-                            salud.setCedula(id);
-                            salud.setEps(eps);
-                            salud.setRh(rh);
-                            out.println(b.insertSalud(salud));
+                        health_data salud = new health_data();
+                        salud.setCedula(id);
+                        salud.setEps(eps);
+                        salud.setRh(rh);
+                        out.println(b.insertSalud(salud));
 
-                            antropometrico ant = new antropometrico();
-                            ant.setCedula(id);
-                            ant.setEstatura(Integer.parseInt(estatura));
-                            ant.setPeso(Integer.parseInt(peso));
-                            out.println(b.insertDatos_antropometricos(ant));
+                        antropometrico ant = new antropometrico();
+                        ant.setCedula(id);
+                        ant.setEstatura(Integer.parseInt(estatura));
+                        ant.setPeso(Integer.parseInt(peso));
+                        out.println(b.insertDatos_antropometricos(ant));
 
-                            datos_segui d_s = new datos_segui();
-                            d_s.setCedula(id);
-                            d_s.setCategoria(categoria);
-                            d_s.setDeporte(tipo_actividad);
-                            d_s.setDias_pract(Integer.parseInt(dias_act));
-                            d_s.setRazon(razon);
-                            out.println(b.insertDatos_segui(d_s));
+                        datos_segui d_s = new datos_segui();
+                        d_s.setCedula(id);
+                        d_s.setCategoria(categoria);
+                        d_s.setDeporte(tipo_actividad);
+                        d_s.setDias_pract(Integer.parseInt(dias_act));
+                        d_s.setRazon(razon);
+                        out.println(b.insertDatos_segui(d_s));
 
-                            datos_contacto d_c = new datos_contacto();
-                            d_c.setCedula(id);
-                            d_c.setCiudad(ciudad);
-                            d_c.setDireccion(direccion);
-                            d_c.setEmai(email);
-                            d_c.setTelefono(tel);
-                            out.println(b.insertDatos_contacto(d_c));
+                        datos_contacto d_c = new datos_contacto();
+                        d_c.setCedula(id);
+                        d_c.setCiudad(ciudad);
+                        d_c.setDireccion(direccion);
+                        d_c.setEmai(email);
+                        d_c.setTelefono(tel);
+                        out.println(b.insertDatos_contacto(d_c));
+
+                        for (String x : sedes) {
+                            if (x != null) {
+                                part_event partic = new part_event();
+                                partic.setCedula(id);
+                                String num = String.valueOf(x.charAt(4));
+                                partic.setId_Sede(Integer.parseInt(num));
+                                partici.add(partic);
+                            }
+                        }
+                        out.println(b.insertParticipacion(partici));
+
                     }
+
                 }
-                b.updateDatos();
             } else {
                 persona participante = new persona();
                 participante.setCed(id);
@@ -218,15 +188,14 @@
                     if (x != null) {
                         part_event partic = new part_event();
                         partic.setCedula(id);
-                        partic.setId_Sede(Integer.parseInt(x));
+                        String num = String.valueOf(x.charAt(4));
+                        partic.setId_Sede(Integer.parseInt(num));
                         partici.add(partic);
                     }
                 }
                 out.println(b.insertParticipacion(partici));
-                b.updateDatos();
             }
-
-
+            b.updateDatos();
         %>
         <br>
 

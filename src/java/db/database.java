@@ -78,24 +78,22 @@ public class database {
 
     public String verificarParticipaciones() {
         participaciones = new ArrayList<part_event>();
+        String res="NADA";
         try {
             String sql = "SELECT * FROM PART_EVENT";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 part_event aux1 = new part_event();
-                
-                aux1.setCedula(""+resultSet.getString("ID_PERSON"));
+                aux1.setCedula(resultSet.getString("ID_PERSON"));
                 aux1.setId_Sede(resultSet.getInt("ID_SEDE"));
-                
                 participaciones.add(aux1);
-                return (resultSet.getString("ID_PERSON"));
-                
+                res="Hay algo";
             }
         } catch (Exception e) {
-            return "participaciones " + e;
+            return "participaciones " + e + res;
         }
-        return "nada";
+        return res;
     }
 
     public String setParticipantes() {
@@ -119,7 +117,7 @@ public class database {
             }
         } catch (Exception e) {
             System.out.println("personas" + e);
-            return e.getMessage();
+            return e.toString();
         }
         return "nada";
     }
@@ -149,7 +147,7 @@ public class database {
     public String consultarAntropometricos() {
         antropometricos = new ArrayList<antropometrico>();
         try {
-            String sql = "SELECT * FROM ANTHROPOMETRIC";
+            String sql = "SELECT * FROM ANTHROPOMETRIC_DATA";
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
