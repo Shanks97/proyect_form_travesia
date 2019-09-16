@@ -17,7 +17,7 @@
     <head>
 
         <meta content="width=device-width, initial-scale=1.0" http-equiv="Content-Type" name="viewport">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="css/styles_1.css" rel="stylesheet">
         <script type="text/javascript">
             window.addEventListener("load", function () {
                 const loader = document.querySelector(".loader");
@@ -172,10 +172,12 @@
             <div class="loader1"></div>
         </div>
         <div>
-            <div style="background-color: white; width: 200px; height:150px;">
+            <div style="background-color: white; width: 80%; height:90px; margin-left: 10%;">
                 <img id="logo" style="" src="images/3Recurso 2-50.jpg">
-                <label id="title_t">TRAVESIA POR CUNDINAMARCA</label> 
-
+                
+                <!--<p id="title_t">TRAVESIA POR CUNDINAMARCA-->
+                
+                <img id="title_t" style="" src="images/logo_travesia.png">
                 <img id="logo_travesia" style="" src="images/logo_travesia.png">
             </div>
            

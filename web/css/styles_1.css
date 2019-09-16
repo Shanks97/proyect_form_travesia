@@ -17,12 +17,13 @@ body {
 #title_t{
     padding-left: 9%;
     padding-top: 7%;
+    width: auto; 
+    height:  24%; 
     position: absolute;
     font-size: 140%;
     font-family: "Century Gothic";
     font-style: italic;
     font-weight: bold;
-    word-break: break-all;
 }
 #logo_travesia{
     width: 180px; 
