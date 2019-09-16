@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : registrar
     Created on : 19/08/2019, 05:11:49 AM
     Author     : Juan
