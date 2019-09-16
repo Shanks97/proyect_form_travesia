@@ -47,7 +47,8 @@
             String sedes[] = new String[8];
             for (int i = 0; i < sedes.length; i++) {
                 sedes[i] = request.getParameter(Integer.toString(i + 1));
-                out.println(sedes[i]);
+                if(sedes[i] != null)
+                  out.println(sedes[i]);
             }
 
             database b = new database();
@@ -61,7 +62,7 @@
                     for (String s : sedes) {
                         String h = "sede" + x.getId_Sede();
                         if (x.getCedula().equals(id) && h.equals(s)) {
-                            out.print("Ya esta en esas sedes " + x.getId_Sede());
+                           // out.print("Ya esta en esas sedes " + x.getId_Sede());
                             existe = true;
                         }
                     }
@@ -72,7 +73,7 @@
                     int verify2 = 0;
                     for (part_event x : b.getParticipaciones()) {
                         if (x.getCedula().equals(id)) {
-                            out.print("Ya esta la cedula");
+                            //out.print("Ya esta la cedula");
                             verify = true;
                         } else {
                             verify2++;
@@ -80,7 +81,9 @@
                     }
                     if (verify) {
                         for (String x : sedes) {
-                            if (x != null) {
+                            //out.print(x + " 1");
+                            if (x!=null) {
+                                out.print(x + " 1");
                                 part_event partic = new part_event();
                                 partic.setCedula(id);
                                 String num = String.valueOf(x.charAt(4));
@@ -88,7 +91,7 @@
                                 partici.add(partic);
                             }
                         }
-                        out.println(b.insertParticipacion(partici));
+                       out.println(b.insertParticipacion(partici));
                     }
                     if (verify2 == b.getParticipaciones().size()) {
                         persona participante = new persona();
@@ -122,6 +125,7 @@
                         d_s.setRazon(razon);
                         out.println(b.insertDatos_segui(d_s));
 
+                        
                         datos_contacto d_c = new datos_contacto();
                         d_c.setCedula(id);
                         d_c.setCiudad(ciudad);
@@ -131,7 +135,9 @@
                         out.println(b.insertDatos_contacto(d_c));
 
                         for (String x : sedes) {
-                            if (x != null) {
+                            out.print(x + " 2");
+                            if (x!=null) {
+                                out.print(x + " 2");
                                 part_event partic = new part_event();
                                 partic.setCedula(id);
                                 String num = String.valueOf(x.charAt(4));
@@ -185,7 +191,9 @@
                 out.println(b.insertDatos_contacto(d_c));
 
                 for (String x : sedes) {
-                    if (x != null) {
+                   // out.print(x);
+                    if (x!=null) {
+                        out.print(x + "Test");
                         part_event partic = new part_event();
                         partic.setCedula(id);
                         String num = String.valueOf(x.charAt(4));

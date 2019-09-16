@@ -17,7 +17,7 @@
     <head>
 
         <meta content="width=device-width, initial-scale=1.0" http-equiv="Content-Type" name="viewport">
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="css/styles_2.css" rel="stylesheet">
         <script type="text/javascript">
             window.addEventListener("load", function () {
                 const loader = document.querySelector(".loader");
@@ -200,7 +200,7 @@
                         
                         for(int i=0;i<sedes.length;i++){
                             %>
-                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=i+1%>" value="<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
+                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=sedes[i].getId()%>" value="sede<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
                         <%}
                     %>
                     <p><select name="id" required="">
