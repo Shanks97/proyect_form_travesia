@@ -17,7 +17,7 @@
     <head>
 
         <meta content="width=device-width, initial-scale=1.0" http-equiv="Content-Type" name="viewport">
-        <link href="css/styles_1.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
         <script type="text/javascript">
             window.addEventListener("load", function () {
                 const loader = document.querySelector(".loader");
@@ -163,6 +163,7 @@
 
     </head>
     <body>
+        <br>
         <header>
             <div name="logos" class="logos" id="logos">
 
@@ -174,18 +175,15 @@
         <div>
             <div style="background-color: white; width: 80%; height:90px; margin-left: 10%;">
                 <img id="logo" style="" src="images/3Recurso 2-50.jpg">
-                
-                <!--<p id="title_t">TRAVESIA POR CUNDINAMARCA-->
-                
-                <img id="title_t" style="" src="images/logo_travesia.png">
-                <img id="logo_travesia" style="" src="images/logo_travesia.png">
             </div>
-           
+            <br>
+           <img id="logo_travesia" style="" src="images/logo_travesia.png">
             <form action="registrar.jsp" id="regForm" name="regForm">
-                Seleccione la(s) sede(s) en la(s) que desea participar!
+                
 
-                    
+                <h1 id="title_t"> Travesia por Cundinamarca</h1>
                 <div class="tab" >
+                    Seleccione la(s) sede(s) en la(s) que desea participar!<br><br>
                     <%
                         
                         
@@ -202,7 +200,7 @@
                         
                         for(int i=0;i<sedes.length;i++){
                             %>
-                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=sedes[i].getId()%>" value="sede<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
+                            <input type="checkbox" style="width: 5%" class="sede" name ="<%=i+1%>" value="<%=sedes[i].getId() %>"> <%=sedes[i].getNombre()%><br>
                         <%}
                     %>
                     <p><select name="id" required="">
