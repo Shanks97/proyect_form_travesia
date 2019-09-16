@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class database {
 
     public Connection con;
-    private final String url = "jdbc:oracle:thin:@localhost:1521:XE";
+    private final String url = "jdbc:oracle:thin:@191.89.20.42:1521:XE";
     private final String user = "system";
     private final String pass = "admin";
 
