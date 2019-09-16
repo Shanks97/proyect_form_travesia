@@ -10,25 +10,25 @@ body {
   margin: 0px;
 }
 #logo{
-    width: 50px;
-    height: 90px;
+    width: 9%;
+    
     background-size: cover;
 }
 #title_t{
-    padding-left: 9%;
-    padding-top: 7%;
-    position: absolute;
-    font-size: 140%;
+    /*font-size: 50px;*/
     font-family: "Century Gothic";
     font-style: italic;
     font-weight: bold;
-    word-break: break-all;
 }
 #logo_travesia{
-    width: 180px; 
-    height: 90px;
-    float:right;
+    width: 50%; 
+    /*margin-right: 10%;*/
+    margin: auto;
     background-size: cover;
+    display: block;
+    
+}
+#strava{
     
 }
 #regForm {
