@@ -204,6 +204,7 @@
                 out.println(b.insertParticipacion(partici));
             }
             b.updateDatos();
+            response.sendRedirect("complete.jsp");
         %>
         <br>
 

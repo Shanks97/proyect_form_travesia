@@ -218,7 +218,7 @@
                         </option>
                     </select>
                     </p>
-                    <p><input type = "number"name="id_docum" oninput="this.className = ''" placeholder="Numero de identidad..."></p>
+                    <p><input type = "number"name="id_docum" min="0" oninput="this.className = ''" placeholder="Numero de identidad..."></p>
                      <label><input style="width: 5% " type="checkbox" name="pol_data" value="true"> He leido y acepto la <a target ="_blank"href="https://www.ucundinamarca.edu.co/index.php/proteccion-de-datos-personales">política de tratamiento de datos personales.</a></label>
 
                     </div>
@@ -380,9 +380,9 @@
                 <div class="tab">
                     Datos Antropometricos
                     <p> <label>Peso:</label></p>
-                    <p><input type="number" name="weight" required></p>
+                    <p><input type="number" name="weight" min="0" required></p>
                     <p> <label>Estatura:</label>
-                        <input type="number" name="height" placeholder="Ingrese la estatura en centímetros" required>
+                        <input type="number" name="height"  min="0" placeholder="Ingrese la estatura en centímetros" required>
                     </p>
                     <p>
                         <label>¿Por qué quiere participar en la Travesía por Cundinamarca?</label></p>
